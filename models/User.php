@@ -63,6 +63,24 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     }
 
     /**
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        return $this->role->name == 'admin';
+    }
+
+    public function isTeacher()
+    {
+        return $this->role == 'teacher';
+    }
+
+    public function isStudent()
+    {
+        return $this->role == 'student';
+    }
+
+    /**
      * Gets query for [[Role]].
      *
      * @return \yii\db\ActiveQuery|RoleQuery
