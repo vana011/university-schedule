@@ -87,6 +87,29 @@ class SiteController extends Controller
     }
 
     /**
+     * @return string|Response
+     * @throws \Exception
+     */
+    public function actionRegister()
+    {
+        $model = new \app\models\User();
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->password = password_hash($_POST['User']['password'], PASSWORD_DEFAULT);
+            $model->authKey = md5(random_bytes(5));
+            $model->accessToken = password_hash(random_bytes(10), PASSWORD_DEFAULT);
+            if ($model->validate() && $model->save()) {
+                return $this->redirect(['login']);
+            }
+        }
+        var_dump($model);
+        exit();
+        return $this->render('register', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
      * Logout action.
      *
      * @return Response

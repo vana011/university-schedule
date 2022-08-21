@@ -40,7 +40,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             [['authKey', 'accessToken'], 'string'],
             [['role_id'], 'integer'],
             [['email'], 'string', 'max' => 60],
-            [['password'], 'string', 'max' => 20],
+            [['password'], 'string', 'min' => 7],
             [['phone'], 'string', 'max' => 30],
             [['role_id'], 'exist', 'skipOnError' => true, 'targetClass' => Role::className(), 'targetAttribute' => ['role_id' => 'id']],
         ];
