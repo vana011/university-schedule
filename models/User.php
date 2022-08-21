@@ -2,103 +2,101 @@
 
 namespace app\models;
 
-class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
+use Yii;
+
+/**
+ * This is the model class for table "user".
+ *
+ * @property int $id
+ * @property string $email
+ * @property string $password
+ * @property string $authKey
+ * @property string $accessToken
+ * @property string|null $phone
+ * @property int|null $role_id
+ *
+ * @property Role $role
+ * @property Student[] $students
+ * @property Teacher[] $teachers
+ */
+class User extends \yii\db\ActiveRecord
 {
-    public $id;
-    public $username;
-    public $password;
-    public $authKey;
-    public $accessToken;
-
-    private static $users = [
-        '100' => [
-            'id' => '100',
-            'username' => 'admin',
-            'password' => 'admin',
-            'authKey' => 'test100key',
-            'accessToken' => '100-token',
-        ],
-        '101' => [
-            'id' => '101',
-            'username' => 'demo',
-            'password' => 'demo',
-            'authKey' => 'test101key',
-            'accessToken' => '101-token',
-        ],
-    ];
-
-
     /**
      * {@inheritdoc}
      */
-    public static function findIdentity($id)
+    public static function tableName()
     {
-        return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
+        return 'user';
     }
 
     /**
      * {@inheritdoc}
      */
-    public static function findIdentityByAccessToken($token, $type = null)
+    public function rules()
     {
-        foreach (self::$users as $user) {
-            if ($user['accessToken'] === $token) {
-                return new static($user);
-            }
-        }
-
-        return null;
+        return [
+            [['email', 'password', 'authKey', 'accessToken'], 'required'],
+            [['authKey', 'accessToken'], 'string'],
+            [['role_id'], 'integer'],
+            [['email'], 'string', 'max' => 60],
+            [['password'], 'string', 'max' => 20],
+            [['phone'], 'string', 'max' => 30],
+            [['role_id'], 'exist', 'skipOnError' => true, 'targetClass' => Role::className(), 'targetAttribute' => ['role_id' => 'id']],
+        ];
     }
 
     /**
-     * Finds user by username
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'email' => 'Email',
+            'password' => 'Password',
+            'authKey' => 'Auth Key',
+            'accessToken' => 'Access Token',
+            'phone' => 'Phone',
+            'role_id' => 'Role ID',
+        ];
+    }
+
+    /**
+     * Gets query for [[Role]].
      *
-     * @param string $username
-     * @return static|null
+     * @return \yii\db\ActiveQuery|RoleQuery
      */
-    public static function findByUsername($username)
+    public function getRole()
     {
-        foreach (self::$users as $user) {
-            if (strcasecmp($user['username'], $username) === 0) {
-                return new static($user);
-            }
-        }
-
-        return null;
+        return $this->hasOne(Role::className(), ['id' => 'role_id']);
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getAuthKey()
-    {
-        return $this->authKey;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function validateAuthKey($authKey)
-    {
-        return $this->authKey === $authKey;
-    }
-
-    /**
-     * Validates password
+     * Gets query for [[Students]].
      *
-     * @param string $password password to validate
-     * @return bool if password provided is valid for current user
+     * @return \yii\db\ActiveQuery|StudentQuery
      */
-    public function validatePassword($password)
+    public function getStudents()
     {
-        return $this->password === $password;
+        return $this->hasMany(Student::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Teachers]].
+     *
+     * @return \yii\db\ActiveQuery|TeacherQuery
+     */
+    public function getTeachers()
+    {
+        return $this->hasMany(Teacher::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * {@inheritdoc}
+     * @return UserQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new UserQuery(get_called_class());
     }
 }
