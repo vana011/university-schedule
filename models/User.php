@@ -53,12 +53,12 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return [
             'id' => 'ID',
-            'email' => 'Email',
-            'password' => 'Password',
+            'email' => 'Почта',
+            'password' => 'Пароль',
             'authKey' => 'Auth Key',
             'accessToken' => 'Access Token',
-            'phone' => 'Phone',
-            'role_id' => 'Role ID',
+            'phone' => 'Телефон',
+            'role_id' => 'Роль',
         ];
     }
 

@@ -13,8 +13,8 @@ $this->title = 'Регистрация';
     <h1><?= Html::encode($this->title) ?></h1>
     <?php $form = ActiveForm::begin([
         'fieldConfig' => [
-            'labelOptions' => ['class' => 'col-lg-2 col-form-label mr-lg-3'],
-            'inputOptions' => ['class' => 'col-lg-4 form-control'],
+            'labelOptions' => ['class' => 'col-lg-6 col-form-label mr-lg-3'],
+            'inputOptions' => ['class' => 'col-lg-6 form-control'],
         ],
     ]); ?>
 

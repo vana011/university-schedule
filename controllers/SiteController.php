@@ -102,8 +102,7 @@ class SiteController extends Controller
                 return $this->redirect(['login']);
             }
         }
-        var_dump($model);
-        exit();
+
         return $this->render('register', [
             'model' => $model,
         ]);
