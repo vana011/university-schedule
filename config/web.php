@@ -52,6 +52,10 @@ $config = [
         
     ],
     'params' => $params,
+    'language' => 'ru-RU',
+    'modules' => [
+        'gridview' => ['class' => 'kartik\grid\Module']
+    ]
 ];
 
 if (YII_ENV_DEV) {
