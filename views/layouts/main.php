@@ -49,6 +49,12 @@ if (!Yii::$app->user->isGuest) {
             ['label' => 'Главная', 'url' => ['/site/index']],
             !Yii::$app->user->isGuest && $user->isAdmin() ? ['label' => 'Пользователи', 'url' => ['/user/index']]
                 : '',
+            !Yii::$app->user->isGuest && $user->isAdmin() ? ['label' => 'Студенты', 'url' => ['/student/index']]
+                : '',
+            !Yii::$app->user->isGuest && $user->isAdmin() ? ['label' => 'Формирование групп', 'url' => ['/generate/index']]
+                : '',
+            !Yii::$app->user->isGuest && $user->isAdmin() ? ['label' => 'Формирование расписание', 'url' => ['/schedule/index']]
+                : '',
             Yii::$app->user->isGuest
                 ? ['label' => 'Авторизация', 'url' => ['/site/login']]
                 : '<li class="nav-item">'

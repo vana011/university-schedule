@@ -50,11 +50,11 @@ class Student extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'ball' => 'Ball',
-            'user_id' => 'User ID',
-            'speciality_id' => 'Speciality ID',
-            'groupe_id' => 'Groupe ID',
+            'name' => 'ФИО',
+            'ball' => 'Балл',
+            'user_id' => 'Аккаунт',
+            'speciality_id' => 'Специальность',
+            'groupe_id' => 'Группа',
         ];
     }
 

@@ -46,10 +46,10 @@ class Schedule extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'day' => 'Day',
-            'number' => 'Number',
-            'groupe_id' => 'Groupe ID',
-            'speciality_subject_id' => 'Speciality Subject ID',
+            'day' => 'День',
+            'number' => 'Номер',
+            'groupe_id' => 'Группа',
+            'speciality_subject_id' => 'Дисциплина',
         ];
     }
 
