@@ -67,17 +67,23 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public function isAdmin()
     {
-        return $this->role->name == 'admin';
+        if (isset($this->role->name)) {
+            return $this->role->name == 'admin';
+        }
     }
 
     public function isTeacher()
     {
-        return $this->role == 'teacher';
+        if (isset($this->role->name)) {
+            return $this->role->name == 'teacher';
+        }
     }
 
     public function isStudent()
     {
-        return $this->role == 'student';
+        if (isset($this->role->name)) {
+            return $this->role->name == 'student';
+        }
     }
 
     /**

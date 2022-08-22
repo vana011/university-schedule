@@ -11,6 +11,9 @@ use yii\widgets\Pjax;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Расписание';
+if (!Yii::$app->user->isGuest) {
+    $user = \app\models\User::find()->where(['id' => Yii::$app->user->id])->one();
+}
 ?>
 <div class="schedule-index">
 
@@ -43,7 +46,8 @@ $this->title = 'Расписание';
             ],
             [
                 'class' => ActionColumn::className(),
-                'template' => ' {delete} {update}',
+
+                'template' => !Yii::$app->user->isGuest && $user->isAdmin() ?' {delete} {update}' : '',
                 'urlCreator' => function ($action, \app\models\Schedule $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                 }

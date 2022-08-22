@@ -55,6 +55,10 @@ if (!Yii::$app->user->isGuest) {
                 : '',
             !Yii::$app->user->isGuest && $user->isAdmin() ? ['label' => 'Формирование расписание', 'url' => ['/schedule/index']]
                 : '',
+            !Yii::$app->user->isGuest && $user->isTeacher() ? ['label' => 'Расписание', 'url' => ['/schedule/index']]
+                : '',
+            !Yii::$app->user->isGuest && $user->isStudent() ? ['label' => 'Расписание', 'url' => ['/schedule/index']]
+                : '',
             Yii::$app->user->isGuest
                 ? ['label' => 'Авторизация', 'url' => ['/site/login']]
                 : '<li class="nav-item">'

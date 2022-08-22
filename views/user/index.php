@@ -26,7 +26,7 @@ $this->title = 'Пользователи';
         [
             'attribute' => 'role_id',
             'value' => function (\app\models\User $model) {
-                return $model->role->name;
+                return $model->role->name ?? null;
             }
         ],
         [

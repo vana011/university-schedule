@@ -66,6 +66,27 @@ class ScheduleSearch extends Schedule
 
         $query->andFilterWhere(['like', 'day', $this->day]);
 
+        if (!\Yii::$app->user->isGuest) {
+            $user = \app\models\User::find()->where(['id' => \Yii::$app->user->id])->one();
+
+            if ($user->isTeacher()) {
+                $ids = SpecialitySubject::find()->where(['teacher_id' => $user->teachers[0]->id])->select(['id'])->asArray();
+                $query->where(['in', 'speciality_subject_id', $ids]);
+            }
+        }
+
+        if (!\Yii::$app->user->isGuest) {
+            $user = \app\models\User::find()->where(['id' => \Yii::$app->user->id])->one();
+
+            if ($user->isStudent()) {
+                if (count($user->students) != 0) {
+                    $query->where(['groupe_id' => $user->students[0]->groupe_id]);
+                } else {
+                    $query->where(['groupe_id' => -1]);
+                }
+            }
+        }
+
         return $dataProvider;
     }
 }
